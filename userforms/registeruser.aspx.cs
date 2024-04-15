@@ -83,7 +83,7 @@ namespace userforms
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string selectQuery = "SELECT * FROM users";
+                    string selectQuery = "SELECT  top 1 * FROM users order by UserID desc";
                     using (SqlCommand command = new SqlCommand(selectQuery, connection))
                     {
                         SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
@@ -98,12 +98,13 @@ namespace userforms
                 string jsonString = ConvertXmlToJson(xmlString);
                 string filePath = Server.MapPath("~/App_Data/users.json");
                 // Write the JSON string to a file
-                File.WriteAllText(filePath, jsonString);
+                File.AppendAllText(filePath, jsonString);
 
                 // Optionally, you can use the JSON string (jsonString) as needed
                 // For example, you can send it as a response or perform further processing
 
                 // Example: Output JSON to console
+                //Convert data to XML ti text local to remote 
                 Console.WriteLine(jsonString);
             }
             catch (Exception ex)
